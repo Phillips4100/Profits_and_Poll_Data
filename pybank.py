@@ -19,74 +19,89 @@
 # Modules
 import os
 import csv
+import statistics
 
 # Set path for file
 csvpath = os.path.join("resources", "budget_data.csv")
-# output = os.path.join("Analysis", "budget_analysis.csv")
 
-months_total = 0
-profit_total = 0
-average =0
-Profit_Loss = []
-greatest_decrease = 0
-greatest_increase = 0
-change = [0]
-profit =0
+greatest_increase =0
+greatest_decrease =0
+increase_month =[]
+decrease_month =[]
 months =[]
-rows = 0
+profit =[]
+monthly_diff =[0]
+changes_totaled =0
+total_changes =0
+average_change =0
 
 # Open the CSV
 with open(csvpath) as csvfile:
-	csvreader = csv.reader(csvfile, delimiter=',')
-	header = next(csvreader)
-	
-	months_total = len(list(csvreader))
-	
-	print (header)
+    csvreader = csv.reader(csvfile, delimiter=',')
+    header = next(csvreader)
 
-	for row in csvreader:
-		print (row)
-	
-    # #identify values
-		date = row[0]
-		values =row[1]
-		months.append(date)
-		profit.append(values)
-		profit_total += int(row[1])
+    #list values for months and profit
+    #calculate total profit
+    total_profit=0
+    for row in csvreader:
+        total_profit += int(row[1])
+        months.append(row[0])
+        profit.append(row[1])
+        # remove this and total profit fails....
+        monthly_diff= profit
+         
+    # Calculate total Months
+    months_total = len(months)
 
-    # calculate change in profit month to montn
-	# profit = [int(i) for i in profit]
-	# for i in range(0, len(profit)-1):
-	# 	change[i] = profit[i]-profit[i+1]
-	# 	change.append(profit[i]-profit[i+1])
-		# profit_total.append(int(row[1]))
-           
-	# profit_total = sum(profit)
-	# profit_total = sum(profit)
-	average = profit_total/months_total   
-	#calculate  min and max
-	# greatest_increase = max(change)
-	# greatest_decrease = min(change)
+    profit = [int (i) for i in profit]
+    # Calculate price changes, store values as monthly_diff
+    for i in range(0, months_total-1):
+        monthly_diff[i] = int(profit[i+1]-profit[i])
+    monthly_diff.append(int(profit[i+1]-profit[i]))
+    k=2
+    res=monthly_diff[: -k or None]
 
-print (profit)
-print (profit_total)
-print (months)
-# print (Date)
-# print (months_total)    
-# print (average)
-# print (change)
-# print (months)
-        
-    # Profit_loss=[int(i) for i in PL]
-    # for i in range(0, len(PL)-1):
-    #     profit_change[i]=PL[i+1]-PL[i]
-    #     profit_change.append(PL[i+1]-PL[i])
-    #     greatest_increase =  max(profit_change)
-    #     greatest_decrease = min(profit_change)
+    # Capture values (increase, decrease, dates, and average)
+    greatest_increase = max(profit)
+    greatest_decrease = min(profit)
+    changes_totaled = sum(res)
+    total_changes = len(res)
+    MaxDateSpot=profit.index(greatest_increase)
+    MinDateSpot=profit.index(greatest_decrease)
+    increase_month=months[MaxDateSpot]
+    decrease_month=months[MinDateSpot]
+    average_change = (changes_totaled/total_changes)
 
-# Print(f 'Financial Analysis \n Total: ${profit_total} \n Average Change: ${average_change} \n Greatest Monthly Increase: {increase_date} ${greatest_increase} \
-#     \n Greatest Monthly Decrease: {decrease_date}${greatest_decrease}')
+    # print results
+    print (f'Financial Analysis: \n  Total Months: {months_total} \
+        \n  Total Profit: ${total_profit} \n  Average Change: ${average_change} \
+        \n  Greatest Increase in Profits: {increase_month} (${greatest_increase}) \
+        \n  Greatest Decrease in Profits: {decrease_month} (${greatest_decrease})')
 
+# set output path and file name.
+output = os.path.join("analysis", "budget_analysis.csv")
+with open(output, 'w') as csvfile:
+    csvwriter = csv.writer(csvfile, delimiter=',')
+    # create lists
+    lables=['Label', 'total months', 'total profit', 'average change', 'greatest increase month', 'greatest increase', 'greatest decrease month', 'greatest decrease', ]
+    data=['Data', months_total, total_profit, average_change, increase_month, greatest_increase, decrease_month, greatest_decrease]
+    # convert list to rows and write to .csv
+    rows=zip(lables, data)
+    for row in rows:
+        csvwriter.writerow(row)
 
-
-
+    # # print (res)
+    # # print (profit)
+    # # print (total_changes)
+    # # calculate average change
+    # # average_change = sum(int(monthly_diff))
+    # print (greatest_increase)
+    # print (greatest_decrease)
+    # print (average_change)
+    # print (increase_month)
+    # print (decrease_month)
+    # # print (monthly_diff[i])
+    # print (total_profit)
+    # # print (months_total)
+    # # print (greatest_increase)
+    # # print (greatest_decrease)
