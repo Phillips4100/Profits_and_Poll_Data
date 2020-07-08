@@ -28,44 +28,72 @@
 # Modules
 import os
 import csv
+from collections import Counter
 
 # Set path for file
-csvpath = os.path.join("Resources", "election_data.csv")
+csvpath = os.path.join("..", "Resources", "election_data.csv")
 
 candidates = []
-votes =0
 total_votes =0
+candidate=[]
+counter =0
+vote_tally={}
 # County = []
 # percent = 0
+votes =[]
 
 # Open the CSV
+
 with open(csvpath) as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
-    header = next(csvreader)
-
-    for row in csvreader:
-        candidate = row[2]
-        votes = row[0]
-        # total_votes = len(row[0])
-        if candidate not in candidates:
-            candidates.append(candidate)
-       
-        #     vote_tally[candidate]+=1
-        # if candidate in candidates:
-        #     vote_tally[candidate]+=1
-    # vote_tally[candidate]-0
-    # vote_tally[candidate]+=1
-    # iterate over list of unique candidates
-    # for candidate in candidates:
-    #     vote_tally[candidate] = [0,0]
-    # percent = vote_tally/total_votes
-
-print (candidates)
-# print (vote_tally)
-# print (total_votes)
     
-# winner = max(candidate_votes)
+    header = next(csvreader)
+    for row in csvreader:
+        counter = counter + 1
+           
+# get a list of candidates
+        candidate = row[2]
+        # if candidate not in candidates:
+        candidates.append(candidate)
 
-# output = os.path.join("Analysis", "election_results")
-# with open(output, 'w') as csvfile:
-# csvwriter = csv.writer(csvfile, delimiter=",")#
+# build dictionary of unique candidates
+    # vote_tally ={}
+    # emp_id = emp_dict.get('ID')
+    # vote_tally[candidate] = [0,0]
+    # for candidate in candidates:
+    #     if candidate in vote_tally[candidate]: 
+    #         vote_tally[candidate] +=1
+    #     else: # implies doesn't exist - aka first time
+    #         vote_tally[candidate]=1
+        # value[0] = round(((value[1] / counter) * 100), 1)
+
+# total candidate votes
+    # for key, value in vote_tally.items():
+    #     if key == row[2]:
+    #         value[1] = value[1] + 1
+    #     # else
+    #     #     value[1] = value[1] = 1
+    #         # percent votes for candidate
+    #        
+
+# Identify winner   
+    votes = 0         
+    for key, value in vote_tally.items():
+        if value[1] > votes:
+            votes = value[1]
+            # store corresponding candidate name
+            winner = key
+
+    # print (counter)
+    print (candidates)
+    # print (vote_tally)
+    # print (winner)
+
+# print (f'Election Results: \n \
+    # ------------------------- \n \
+    # Total Votes: {counter} \n \
+    # ------------------------- \n \
+    # {vote_tally} \n \
+    # ------------------------- \n \
+    # Winner: {winner} \n \
+    # -------------------------')

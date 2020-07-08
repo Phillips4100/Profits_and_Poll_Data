@@ -13,6 +13,7 @@ counter =0
 vote_tally={}
 # County = []
 # percent = 0
+winner =[]
 
 # Open the CSV
 
@@ -34,11 +35,16 @@ with open(csvpath) as csvfile:
         vote_tally[candidate] = [0,0]
 
 # total candidate votes
-    for key, value in vote_tally.items():
-        if key == row[2]:
-            value[1] = value[1] + 1
-            # percent votes for candidate
-            value[0] = round(((value[1] / counter) * 100), 1)
+    for row in csvreader:
+        if row[0] == 'Voter ID':
+            pass
+        else:
+            for key, value in candidate.items():
+                # vote_tally[candidate] = [0,0]
+                if key == row[2]:
+                    value[1] = value[1] + 1
+                    # percent votes for candidate
+                    value[0] = round(((value[1] / counter) * 100), 1)
 
 # Identify winner   
     votes = 0         

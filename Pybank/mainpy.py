@@ -22,7 +22,7 @@ import csv
 import statistics
 
 # Set path for file
-csvpath = os.path.join("resources", "budget_data.csv")
+csvpath = os.path.join("..", "resources", "budget_data.csv")
 
 greatest_increase =0
 greatest_decrease =0
@@ -79,7 +79,7 @@ with open(csvpath) as csvfile:
         \n  Greatest Decrease in Profits: {decrease_month} (${greatest_decrease})')
 
 # set output path and file name.
-output = os.path.join("analysis", "budget_analysis.csv")
+output = os.path.join("..", "analysis", "budget_analysis.csv")
 with open(output, 'w') as csvfile:
     csvwriter = csv.writer(csvfile, delimiter=',')
     # create lists
