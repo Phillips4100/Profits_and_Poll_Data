@@ -28,7 +28,6 @@
 # Modules
 import os
 import csv
-from collections import Counter
 
 # Set path for file
 csvpath = os.path.join("..", "Resources", "election_data.csv")
@@ -40,10 +39,9 @@ counter =0
 vote_tally={}
 # County = []
 # percent = 0
-votes =[]
+winner =[]
 
 # Open the CSV
-
 with open(csvpath) as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
     
@@ -53,28 +51,21 @@ with open(csvpath) as csvfile:
            
 # get a list of candidates
         candidate = row[2]
-        # if candidate not in candidates:
-        candidates.append(candidate)
+        if candidate not in candidates:
+            candidates.append(candidate)
 
 # build dictionary of unique candidates
-    # vote_tally ={}
-    # emp_id = emp_dict.get('ID')
-    # vote_tally[candidate] = [0,0]
-    # for candidate in candidates:
-    #     if candidate in vote_tally[candidate]: 
-    #         vote_tally[candidate] +=1
-    #     else: # implies doesn't exist - aka first time
-    #         vote_tally[candidate]=1
-        # value[0] = round(((value[1] / counter) * 100), 1)
+    vote_tally ={}
+    for candidate in candidates:
+        vote_tally[candidate] = [0,0]
 
 # total candidate votes
-    # for key, value in vote_tally.items():
-    #     if key == row[2]:
-    #         value[1] = value[1] + 1
-    #     # else
-    #     #     value[1] = value[1] = 1
-    #         # percent votes for candidate
-    #        
+    for key, value in vote_tally.items():
+    # vote_tally[candidate] = [0,0]
+        if key == row[2]:
+            value[1] = value[1] + 1
+            # percent votes for candidate
+            value[0] = round(((value[1] / counter) * 100), 1)
 
 # Identify winner   
     votes = 0         
@@ -85,15 +76,15 @@ with open(csvpath) as csvfile:
             winner = key
 
     # print (counter)
-    print (candidates)
+    # print (candidates)
     # print (vote_tally)
     # print (winner)
 
-# print (f'Election Results: \n \
-    # ------------------------- \n \
-    # Total Votes: {counter} \n \
-    # ------------------------- \n \
-    # {vote_tally} \n \
-    # ------------------------- \n \
-    # Winner: {winner} \n \
-    # -------------------------')
+print (f'Election Results: \n \
+    ------------------------- \n \
+    Total Votes: {counter} \n \
+    ------------------------- \n \
+    {vote_tally} \n \
+    ------------------------- \n \
+    Winner: {winner} \n \
+    -------------------------')
