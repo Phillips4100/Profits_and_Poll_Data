@@ -37,54 +37,46 @@ total_votes =0
 candidate=[]
 counter =0
 vote_tally={}
-# County = []
-# percent = 0
 winner =[]
 
 # Open the CSV
 with open(csvpath) as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
-    
     header = next(csvreader)
+    
+    #get count of total votes
+    votes=[]
     for row in csvreader:
         counter = counter + 1
+        votes.append(row[2])
            
 # get a list of candidates
         candidate = row[2]
         if candidate not in candidates:
             candidates.append(candidate)
 
-# build dictionary of unique candidates
+# build dictionary of unique candidates and calculate votes / percentages
     vote_tally ={}
     for candidate in candidates:
-        vote_tally[candidate] = [0,0]
-
-# total candidate votes
-    for key, value in vote_tally.items():
-    # vote_tally[candidate] = [0,0]
-        if key == row[2]:
-            value[1] = value[1] + 1
-            # percent votes for candidate
-            value[0] = round(((value[1] / counter) * 100), 1)
-
-# Identify winner   
-    votes = 0         
-    for key, value in vote_tally.items():
-        if value[1] > votes:
-            votes = value[1]
-            # store corresponding candidate name
-            winner = key
-
-    # print (counter)
-    # print (candidates)
-    # print (vote_tally)
-    # print (winner)
+        vote_tally[candidate] = round(((list.count(votes, candidate))/(counter)*100),2), (list.count(votes, candidate))
+    
+    winner  = max(vote_tally, key=vote_tally.get)
 
 print (f'Election Results: \n \
-    ------------------------- \n \
-    Total Votes: {counter} \n \
-    ------------------------- \n \
-    {vote_tally} \n \
-    ------------------------- \n \
-    Winner: {winner} \n \
-    -------------------------')
+------------------------- \n \
+Total Votes: {counter} \n \
+------------------------- \n \
+Candidate: ( % , Total Votes)')
+for key in vote_tally:
+    print(key, ' : ', vote_tally[key])
+print (f'------------------------- \n \
+Winner: {winner} \n \
+-------------------------')
+
+#write results to csv file
+output = os.path.join("..", "analysis", "election_results.csv")
+with open(output, 'w') as csvfile:
+    csvwriter = csv.writer(csvfile, delimiter=',')
+    w = csv.writer(csvfile)
+    w.writerows(vote_tally.items())
+

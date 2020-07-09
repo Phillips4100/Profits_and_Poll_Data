@@ -1,21 +1,19 @@
 # Modules
 import os
 import csv
-import statistics
 
 # Set path for file
 csvpath = os.path.join("resources", "budget_data.csv")
 
 greatest_increase =0
 greatest_decrease =0
-increase_month =[]
-decrease_month =[]
 months =[]
 profit =[]
-monthly_diff =[0]
+monthly_diff =[]
 changes_totaled =0
 total_changes =0
 average_change =0
+months_total =0
 
 # Open the CSV
 with open(csvpath) as csvfile:
@@ -23,31 +21,23 @@ with open(csvpath) as csvfile:
     header = next(csvreader)
 
     #list values for months and profit
-    #calculate total profit
     total_profit=0
     for row in csvreader:
         total_profit += int(row[1])
         months.append(row[0])
         profit.append(row[1])
-        # remove this and total profit fails....
-        monthly_diff= profit
-         
-    # Calculate total Months
-    months_total = len(months)
 
+    # iterate through and calculate change in profit month-to-month
     profit = [int (i) for i in profit]
-    # Calculate price changes, store values as monthly_diff
+    months_total = len(months)
     for i in range(0, months_total-1):
-        monthly_diff[i] = int(profit[i+1]-profit[i])
-    monthly_diff.append(int(profit[i+1]-profit[i]))
-    k=2
-    res=monthly_diff[: -k or None]
+        monthly_diff.append(int(profit[i+1]-profit[i]))
 
-    # Capture values (increase, decrease, dates, and average)
+    #Calculate Max, Min, Average and totals.  then capture month of greates increase and decrease.
     greatest_increase = max(profit)
     greatest_decrease = min(profit)
-    changes_totaled = sum(res)
-    total_changes = len(res)
+    changes_totaled = sum(monthly_diff)
+    total_changes = len(monthly_diff)
     MaxDateSpot=profit.index(greatest_increase)
     MinDateSpot=profit.index(greatest_decrease)
     increase_month=months[MaxDateSpot]
