@@ -70,7 +70,7 @@ with open(csvpath) as csvfile:
         \n  Greatest Decrease in Profits: {decrease_month} (${greatest_decrease})')
 
 # set output path and file name.
-output = os.path.join("..", "analysis", "budget_analysis.csv")
+output = os.path.join("..", "analysis", "budget_analysis.txt")
 with open(output, 'w') as csvfile:
     csvwriter = csv.writer(csvfile, delimiter=',')
     # create lists

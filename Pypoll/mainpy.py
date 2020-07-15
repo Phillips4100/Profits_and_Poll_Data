@@ -74,7 +74,7 @@ Winner: {winner} \n \
 -------------------------')
 
 #write results to csv file
-output = os.path.join("..", "analysis", "election_results.csv")
+output = os.path.join("..", "analysis", "election_results.txt")
 with open(output, 'w') as csvfile:
     csvwriter = csv.writer(csvfile, delimiter=',')
     w = csv.writer(csvfile)

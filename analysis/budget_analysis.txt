@@ -1,0 +1,8 @@
+Label,Data
+total months,86
+total profit,38382578
+average change,-2315.1176470588234
+greatest increase month,Feb-2012
+greatest increase,1170593
+greatest decrease month,Sep-2013
+greatest decrease,-1196225
