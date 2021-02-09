@@ -45,10 +45,12 @@ with open(csvpath) as csvfile:
     average_change = (changes_totaled/total_changes)
 
     # print results
-    print (f'Financial Analysis: \n  Total Months: {months_total} \
-        \n  Total Profit: ${total_profit} \n  Average Change: ${average_change} \
-        \n  Greatest Increase in Profits: {increase_month} (${greatest_increase}) \
-        \n  Greatest Decrease in Profits: {decrease_month} (${greatest_decrease})')
+    print (f'Financial Analysis: \
+    \n  Total Months: {months_total} \
+    \n  Total Profit: ${total_profit} \
+    \n  Average Change: ${average_change} \
+    \n  Greatest Increase in Profits: {increase_month} (${greatest_increase}) \
+    \n  Greatest Decrease in Profits: {decrease_month} (${greatest_decrease})')
 
 # set output path and file name.
 output = os.path.join("analysis", "budget_analysis.csv")
