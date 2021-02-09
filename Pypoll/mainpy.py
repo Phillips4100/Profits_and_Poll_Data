@@ -62,15 +62,15 @@ with open(csvpath) as csvfile:
     
     winner  = max(vote_tally, key=vote_tally.get)
 
-print (f'Election Results: \n \
-------------------------- \n \
-Total Votes: {counter} \n \
-------------------------- \n \
+print (f'Election Results: \n\
+------------------------- \n\
+Total Votes: {counter} \n\
+------------------------- \n\
 Candidate: ( % , Total Votes)')
 for key in vote_tally:
     print(key, ' : ', vote_tally[key])
-print (f'------------------------- \n \
-Winner: {winner} \n \
+print (f'------------------------- \n\
+Winner: {winner} \n\
 -------------------------')
 
 #write results to csv file
